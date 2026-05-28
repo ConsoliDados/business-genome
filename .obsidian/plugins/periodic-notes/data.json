@@ -1,0 +1,30 @@
+{
+  "showGettingStartedBanner": false,
+  "hasMigratedDailyNoteSettings": true,
+  "hasMigratedWeeklyNoteSettings": false,
+  "daily": {
+    "format": "YYYY-MM-DD",
+    "template": "_templates/tp-daily",
+    "folder": "daily"
+  },
+  "weekly": {
+    "format": "YYYY-[W]ww",
+    "template": "_templates/tp-weekly-review",
+    "folder": "sprints"
+  },
+  "monthly": {
+    "format": "",
+    "template": "",
+    "folder": ""
+  },
+  "quarterly": {
+    "format": "",
+    "template": "",
+    "folder": ""
+  },
+  "yearly": {
+    "format": "",
+    "template": "",
+    "folder": ""
+  }
+}

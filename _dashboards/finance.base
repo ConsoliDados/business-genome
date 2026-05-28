@@ -1,0 +1,23 @@
+filters:
+  and:
+    - type == "project"
+    - status != "archived"
+    - file.inFolder("projects")
+properties:
+  note.currency:
+    displayName: $
+  note.margin-target:
+    displayName: Margin↑
+  note.margin-effective:
+    displayName: Margin✓
+  note.engagement-tier:
+    displayName: Tier
+views:
+  - type: table
+    name: Margins (active)
+    order:
+      - file.name
+      - currency
+      - engagement-tier
+      - margin-target
+      - margin-effective

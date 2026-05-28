@@ -1,0 +1,52 @@
+filters:
+  and:
+    - type == "project"
+    - file.inFolder("projects")
+properties:
+  note.project-type:
+    displayName: Type
+  note.doc-tier:
+    displayName: Tier
+  note.engagement-tier:
+    displayName: Eng
+  note.status:
+    displayName: Status
+  note.currency:
+    displayName: $
+  note.margin-target:
+    displayName: Margin↑
+  note.margin-effective:
+    displayName: Margin✓
+views:
+  - type: table
+    name: All projects
+    order:
+      - file.name
+      - project-type
+      - status
+      - engagement-tier
+      - currency
+    sort:
+      - property: status
+        direction: ASC
+  - type: table
+    name: Clients
+    filters:
+      or:
+        - note.project-type == "client-simple"
+        - note.project-type == "client-complete"
+    order:
+      - file.name
+      - engagement-tier
+      - status
+      - margin-effective
+  - type: table
+    name: Internal
+    filters:
+      or:
+        - note.project-type == "internal-tool"
+        - note.project-type == "internal-product"
+    order:
+      - file.name
+      - project-type
+      - status

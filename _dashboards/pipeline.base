@@ -1,0 +1,27 @@
+filters:
+  and:
+    - type == "lead"
+    - file.inFolder("crm")
+properties:
+  note.status:
+    displayName: Stage
+  note.engagement-tier:
+    displayName: Tier
+  note.company:
+    displayName: Company
+  note.region:
+    displayName: Region
+  note.currency:
+    displayName: $
+views:
+  - type: table
+    name: Pipeline (leads)
+    order:
+      - file.name
+      - company
+      - status
+      - engagement-tier
+      - region
+    sort:
+      - property: status
+        direction: ASC

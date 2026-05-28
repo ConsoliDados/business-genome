@@ -1,0 +1,38 @@
+filters:
+  and:
+    - file.inFolder("editorial")
+properties:
+  note.channel:
+    displayName: Channel
+  note.content-type:
+    displayName: Format
+  note.publish-status:
+    displayName: Status
+  note.publish-date:
+    displayName: Date
+  note.series:
+    displayName: Series
+views:
+  - type: table
+    name: Posts by channel
+    filters:
+      and:
+        - type == "post"
+    order:
+      - file.name
+      - channel
+      - content-type
+      - publish-status
+      - publish-date
+    sort:
+      - property: publish-date
+        direction: DESC
+  - type: table
+    name: Idea backlog
+    filters:
+      and:
+        - type == "idea"
+    order:
+      - file.name
+      - channel
+      - status
