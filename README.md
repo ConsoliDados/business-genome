@@ -14,28 +14,28 @@ This is a **generic template**. To make it yours:
 2. Say **"init genome"** → the agent runs the [[init]] skill: an interview that configures your
    **pipelines** (sales + contracts ship generic — you edit on top), **languages** (model library
    in EN/PT/ES/…), **tiers**, **module states**, and **integrations** (e.g. CRM via Bitrix24).
-3. In `init` you can keep a module, set it **dormant** ("no CRM yet" → moved to `_dormant/`,
+3. In `init` you can keep a module, set it **dormant** ("no CRM yet" → moved to `99-dormant/`,
    reactivate later), **remove** it, or mark it **external** (run by another tool).
 
-Config lives in `_config/` (`genome.md` manifest + `pipelines/` + `integrations/`). Reusable
+Config lives in `97-config/` (`genome.md` manifest + `pipelines/` + `integrations/`). Reusable
 commercial models (proposals, contracts, meetings, emails/questionnaires) live in
-`_templates/<kind>/<lang>/` — generic, and the agent **creates them on demand** if missing.
+`96-templates/<kind>/<lang>/` — generic, and the agent **creates them on demand** if missing.
 
 ## Pillars
 
 | Folder | What |
 |---|---|
-| `projects/internal/`, `projects/clients/` | one folder per project; 4 modular types |
-| `crm/` | `leads/` (pre-sale) + `accounts/` (client companies) |
-| `company/` | `strategy/` `pricing/` `finance/` `people/` (company-level) |
-| `editorial/` | multi-channel content: `ideas/` `posts/` `series/` `guides/` |
-| `_inbox/` → `_archive/` | raw capture → dead storage (excluded from queries) |
-| `_config/` | `genome.md` manifest + `pipelines/` + `integrations/` (set by `init`) |
-| `_templates/` | 4 project scaffolds + Templater files + **model library** (`meetings/ emails/ proposals/ contracts/` per language) |
-| `_skills/` | layered playbooks: `_flows/` (multi-step) + atomic skills |
-| `_dashboards/` | Bases roll-ups + Dataview/Tasks views |
-| `_dormant/` | modules turned off (excluded from queries; reactivate by moving back) |
-| `00-MOCs/`, `meeting-notes/`, `daily/` | indexes, company meetings, dailies |
+| `11-projects/internal/`, `11-projects/clients/` | one folder per project; 4 modular types |
+| `10-crm/` | `leads/` (pre-sale) + `accounts/` (client companies) |
+| `13-company/` | `strategy/` `pricing/` `finance/` `people/` (company-level) |
+| `12-editorial/` | multi-channel content: `ideas/` `posts/` `series/` `guides/` |
+| `02-inbox/` → `95-archive/` | raw capture → dead storage (excluded from queries) |
+| `97-config/` | `genome.md` manifest + `pipelines/` + `integrations/` (set by `init`) |
+| `96-templates/` | 4 project scaffolds + Templater files + **model library** (`meetings/ emails/ proposals/ contracts/` per language) |
+| `98-skills/` | layered playbooks: `_flows/` (multi-step) + atomic skills |
+| `00-dashboards/` | Bases roll-ups + Dataview/Tasks views |
+| `99-dormant/` | modules turned off (excluded from queries; reactivate by moving back) |
+| `01-MOCs/`, `14-meeting-notes/`, `15-daily/` | indexes, company meetings, dailies |
 
 ## Project types
 
@@ -47,10 +47,10 @@ commercial models (proposals, contracts, meetings, emails/questionnaires) live i
 ## Starting a new project
 
 **Driven by a CLI agent (recommended):** just describe the intent — *"qualify this lead",
-"structure the briefing and start the project"* — the agent picks the skill in `_skills/` and
+"structure the briefing and start the project"* — the agent picks the skill in `98-skills/` and
 copies the right scaffold. See the routing table in [[AGENTS.md]].
 
-**Manual (Obsidian):** copy `_templates/_project-<type>/` into `projects/<area>/<slug>/`,
+**Manual (Obsidian):** copy `96-templates/_project-<type>/` into `11-projects/<area>/<slug>/`,
 **rename the home note `_home.md` → `<slug>.md`** (so it shows by project name, not "README"),
 replace the `{{…}}` tokens (`{{slug}}`, `{{Name}}`, `{{date}}`, `{{client-slug}}`,
 `{{currency}}`, `{{repo}}`), and fill the declarations block in `<slug>.md`.
@@ -59,7 +59,7 @@ replace the `{{…}}` tokens (`{{slug}}`, `{{Name}}`, `{{date}}`, `{{client-slug
 
 Mandatory frontmatter (`type`, `status`, `created`) · wikilinks only · lowercase-kebab-case ·
 English-first (per-project content may be pt_BR for BR clients) · one project = one folder ·
-never delete `_inbox/` originals (archive them). Full rules in [[AGENTS.md]].
+never delete `02-inbox/` originals (archive them). Full rules in [[AGENTS.md]].
 
 ## The boundary
 
