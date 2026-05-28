@@ -40,24 +40,24 @@ ConsoliDados keeps **two** documentation systems. Respect the line:
 ## How the human talks to you
 
 In natural language, no copy-pasting prompts. E.g.: *"I had a call with a lead, dropped the
-notes in `_inbox/`. Qualify it and start the briefing."* From that intent, **you** pick which
-skill in `_skills/` to run and which scaffold in `_templates/` to apply (routing table below).
+notes in `02-inbox/`. Qualify it and start the briefing."* From that intent, **you** pick which
+skill in `98-skills/` to run and which scaffold in `96-templates/` to apply (routing table below).
 
 > In a web chat (Claude.ai, ChatGPT) the flow is different: there the human copy-pastes the
-> skill from `_skills/`. Here in the CLI that is **your** job — the human only describes what
+> skill from `98-skills/`. Here in the CLI that is **your** job — the human only describes what
 > they want and you open the right skill.
 
 ## Inbox & archive
 
-`_inbox/` is where raw material lands: call transcripts, chat screenshots, client emails,
-voice-to-text, pasted research (`_inbox/references/`) and loose drafts (`_inbox/drafts/`).
-**Always check `_inbox/` when the human mentions "a meeting", "the client sent", "notes",
+`02-inbox/` is where raw material lands: call transcripts, chat screenshots, client emails,
+voice-to-text, pasted research (`02-inbox/references/`) and loose drafts (`02-inbox/drafts/`).
+**Always check `02-inbox/` when the human mentions "a meeting", "the client sent", "notes",
 "transcript", "this idea".**
 
 After processing an inbox file: the **structured result** goes to its target folder
-(`projects/…`, `editorial/…`, `crm/…`); the **raw original** moves to `_archive/` with a
-date prefix (e.g. `_archive/acme-corp/2026-05-26-transcript.md`). **Never delete the
-original.** `_archive/` is dead storage — kept out of searches and dashboards (queries
+(`11-projects/…`, `12-editorial/…`, `10-crm/…`); the **raw original** moves to `95-archive/` with a
+date prefix (e.g. `95-archive/acme-corp/2026-05-26-transcript.md`). **Never delete the
+original.** `95-archive/` is dead storage — kept out of searches and dashboards (queries
 exclude it), so it never pollutes anything.
 
 ## Project model
@@ -65,18 +65,18 @@ exclude it), so it never pollutes anything.
 One project = one folder. Split by who it's for:
 
 ```
-projects/
+11-projects/
 ├ internal/<slug>/    # ConsoliDados's own tools and products
 └ clients/<slug>/     # client engagements
 ```
 
 **Accounts, leads, people and pricing are cross-cutting and live OUTSIDE the project**, in
-`crm/` (leads, accounts) and `company/` (strategy, pricing, finance, people). A project links
+`10-crm/` (leads, accounts) and `13-company/` (strategy, pricing, finance, people). A project links
 to its account via the `client:` field; one account can have many projects.
 
 ### Four project types (modular: core + modules)
 
-Every project copies a scaffold from `_templates/_project-<type>/`. All share a **core**;
+Every project copies a scaffold from `96-templates/_project-<type>/`. All share a **core**;
 each type adds the modules it needs. The **home note is named after the project**
 (`<slug>.md`, e.g. `pulse.md`, `verdeflora.md`) — **not** `README.md`, so dashboards/graph
 show the project by name. It opens with a **declarations block** (project-type, doc-tier,
@@ -99,21 +99,21 @@ business-plan + product delivery). **internal-tool is the only lean one.**
 
 ## Lifecycle (what the skills drive)
 
-- **Client:** (in `crm/`) lead → **qualify** (ICP + tier T1–T5 + multipliers) → [free call |
+- **Client:** (in `10-crm/`) lead → **qualify** (ICP + tier T1–T5 + multipliers) → [free call |
   Discovery Pack] → **proposal** (3 packages) → **contract** → **kickoff** (creates the
-  project folder under `projects/clients/`) → **delivery** (roadmap/board/sprints) →
+  project folder under `11-projects/clients/`) → **delivery** (roadmap/board/sprints) →
   **close/handoff**.
 - **Internal-product:** idea → **feasibility** → **market** + **persona** → **business-plan**
   → **kickoff** → roadmap/backlog/sprints → launch → operate.
 - **Internal-tool:** short brief → kickoff → board → done.
 
-## Editorial pillar (`editorial/`)
+## Editorial pillar (`12-editorial/`)
 
 Company-level content (not tied to a project): `ideas/` (idea backlog), `posts/` (one file =
 one piece; `channel` + `publish-status` in frontmatter), `series/` (content lines spanning
 channels), `guides/` (voice/tone + per-channel format rules).
 
-Flow: *"I have an idea"* → you structure it in `editorial/ideas/`. **If the channel isn't
+Flow: *"I have an idea"* → you structure it in `12-editorial/ideas/`. **If the channel isn't
 stated, ASK** (blog / LinkedIn / Substack / X / Instagram / youtube-script) — never assume.
 Then it becomes a channel-formatted draft in `posts/`; it can **derive** to another channel
 (e.g. blog→LinkedIn) linking `derived-from`; and a piece that earned audience can be
@@ -122,13 +122,13 @@ supported (`content-type: video-script`) but parked for now.
 
 ## Configuration, pipelines & init
 
-This vault is **generic and self-configuring** via `_config/`:
-- **`_config/genome.md`** — the manifest: company, languages, tiers, pipelines, **module states**
+This vault is **generic and self-configuring** via `97-config/`:
+- **`97-config/genome.md`** — the manifest: company, languages, tiers, pipelines, **module states**
   (`active | dormant | removed | external:<tool>`), integrations.
-- **`_config/pipelines/*`** — the commercial/ops pipelines (ship generic [[sales]] + [[contracts]]);
+- **`97-config/pipelines/*`** — the commercial/ops pipelines (ship generic [[sales]] + [[contracts]]);
   each defines ordered **stages** → the models + docs each stage uses. Running a stage **copies the
   stage's models** into the project (`commercial/`, `meetings/`).
-- **Model library** `_templates/{meetings,emails,proposals,contracts}/<lang>/` — generic,
+- **Model library** `96-templates/{meetings,emails,proposals,contracts}/<lang>/` — generic,
   reusable, **multi-language** (ship `en/`).
 
 **First run:** on a fresh clone (`genome.md` is `status: template-default`) run [[init]]
@@ -139,18 +139,18 @@ integrations, explaining each generic model so the user adjusts on top.
 create a **generic** one (say it's generic) — see [[pipeline]], [[meeting-template]],
 [[email-template]]. Several pipelines are allowed.
 
-**Module states:** `dormant` → folder moved to `_dormant/<module>/` (excluded from dashboards/graph,
-like `_archive/`; reactivate by moving back). `removed` → deleted (**confirm first**).
+**Module states:** `dormant` → folder moved to `99-dormant/<module>/` (excluded from dashboards/graph,
+like `95-archive/`; reactivate by moving back). `removed` → deleted (**confirm first**).
 `external:<tool>` → handled outside (e.g. CRM via Bitrix24) with an [[integration]] note in
-`_config/integrations/` — **the vault models the integration; a live sync is a separate connector.**
+`97-config/integrations/` — **the vault models the integration; a live sync is a separate connector.**
 
 ## Routing table — utterance → skill → where it saves
 
 | The human says… | You run | Skill | Saves to |
 |---|---|---|---|
-| "Qualify this lead / is it a fit?" | qualify against ICP + tier | [[qualify-lead]] | `crm/leads/<slug>.md` |
-| "Structure the briefing / start the project" | brief → create project | [[intake]] (→[[briefing]]→[[kickoff]]) | `projects/<area>/<slug>/` (copy scaffold) |
-| "Draft the proposal" | 3-package proposal | [[proposal]] | `projects/clients/<slug>/commercial/proposal.md` |
+| "Qualify this lead / is it a fit?" | qualify against ICP + tier | [[qualify-lead]] | `10-crm/leads/<slug>.md` |
+| "Structure the briefing / start the project" | brief → create project | [[intake]] (→[[briefing]]→[[kickoff]]) | `11-projects/<area>/<slug>/` (copy scaffold) |
+| "Draft the proposal" | 3-package proposal | [[proposal]] | `11-projects/clients/<slug>/commercial/proposal.md` |
 | "Draft the contract" | terms, FX, NDA, rights | [[contract]] | `…/commercial/contract.md` |
 | "Run the discovery" | Discovery Pack | [[discovery]] | `…/commercial/discovery.md` |
 | "Let's plan delivery" | roadmap + board + backlog | [[delivery]] | `…/delivery/` |
@@ -158,18 +158,18 @@ like `_archive/`; reactivate by moving back). `removed` → deleted (**confirm f
 | "Record the decision to use X (business)" | one business ADR | [[adr]] | `…/adrs/NNNN-*.md` |
 | "Clean up these meeting notes" | structure the minutes | [[meeting-summary]] | `…/meetings/<date>-*.md` |
 | "Refresh the SRS/SAD snapshot" | pull from repo | [[srs-sad-snapshot]] | `…/architecture/srs-<slug>.md` · `sad-<slug>.md` |
-| "I have a content idea" | capture (ask channel) | [[capture-idea]] | `editorial/ideas/<slug>.md` |
-| "Turn it into a post" / "derive to LinkedIn" | channel draft / derive | [[draft-post]] / [[derive-post]] | `editorial/posts/<slug>.md` |
-| "This post did well — go deeper" | promote/escalate | [[promote-post]] | `editorial/posts/<slug>.md` |
-| "Where do my projects stand?" | portfolio roll-up | [[portfolio-review]] | reads `_dashboards/` |
-| "Set this vault up for us / init genome" | interview + configure | [[init]] | `_config/*`, `_templates/*` |
-| "Define / extend a pipeline" | stages + models | [[pipeline]] | `_config/pipelines/<name>.md` |
-| "Create a meeting / email template" | new reusable model | [[meeting-template]] / [[email-template]] | `_templates/{meetings,emails}/<lang>/` |
-| "Integrate our CRM/tool (e.g. Bitrix24)" | integration note + mark module | [[integration]] | `_config/integrations/<tool>.md` |
+| "I have a content idea" | capture (ask channel) | [[capture-idea]] | `12-editorial/ideas/<slug>.md` |
+| "Turn it into a post" / "derive to LinkedIn" | channel draft / derive | [[draft-post]] / [[derive-post]] | `12-editorial/posts/<slug>.md` |
+| "This post did well — go deeper" | promote/escalate | [[promote-post]] | `12-editorial/posts/<slug>.md` |
+| "Where do my projects stand?" | portfolio roll-up | [[portfolio-review]] | reads `00-dashboards/` |
+| "Set this vault up for us / init genome" | interview + configure | [[init]] | `97-config/*`, `96-templates/*` |
+| "Define / extend a pipeline" | stages + models | [[pipeline]] | `97-config/pipelines/<name>.md` |
+| "Create a meeting / email template" | new reusable model | [[meeting-template]] / [[email-template]] | `96-templates/{meetings,emails}/<lang>/` |
+| "Integrate our CRM/tool (e.g. Bitrix24)" | integration note + mark module | [[integration]] | `97-config/integrations/<tool>.md` |
 
-## Skills (`_skills/`) — layered
+## Skills (`98-skills/`) — layered
 
-- **`_skills/_flows/`** — coarse, multi-step playbooks that **call** atomic skills:
+- **`98-skills/_flows/`** — coarse, multi-step playbooks that **call** atomic skills:
   `init` (one-time setup) · `intake` · `client-pipeline` · `business-case` · `delivery` · `editorial`.
 - **Atomic skills** — one per artifact: `briefing`, `kickoff`, `qualify-lead`, `discovery`,
   `proposal`, `contract`, `feasibility-study`, `market-study`, `persona-study`,
@@ -177,7 +177,7 @@ like `_archive/`; reactivate by moving back). `removed` → deleted (**confirm f
   `srs-sad-snapshot`, `portfolio-review`, `readme`, `capture-idea`, `draft-post`,
   `derive-post`, `promote-post`; **config/commercial:** `pipeline`, `meeting-template`,
   `email-template`, `integration`.
-- **`_skills/business-plan/`** — a **skill folder** (a business plan is too big for one pass):
+- **`98-skills/business-plan/`** — a **skill folder** (a business plan is too big for one pass):
   an orchestrator (`README`) + one specialized skill per chapter (`strategic-identity`,
   `marketing-plan`, `operational-plan`, `financial-plan`, `funding-valuation`, `scenarios`,
   `strategic-assessment`, `executive-summary`). Write the plan **chapter by chapter**, reusing
@@ -196,7 +196,7 @@ header.
 - **Language: English-first** for structure, labels and skills. Per-project *content* may be
   pt_BR for a BR client — declare it in one line in the project's declarations
   (`language: pt_BR — BR client`). Code/structure stay English.
-- **One project = one folder**; never mix two projects/clients in one folder.
+- **One project = one folder**; never mix two projects or clients in one folder.
 - **AI structures, human decides.** You are the junior pair; the human is the tech lead.
 
 ## Guard-rails — do NOT
@@ -206,7 +206,7 @@ header.
 2. **Don't invent requirements.** If the client/PO didn't say it, mark **"ASK-CLIENT"** (or
    "ASK-PO") in `open-questions.md` instead of guessing.
 3. **Don't assume the editorial channel.** If unspecified, ask.
-4. **Don't delete `_inbox/` material** — archive it in `_archive/<slug>/`. Originals never lost.
+4. **Don't delete `02-inbox/` material** — archive it in `95-archive/<slug>/`. Originals never lost.
 5. **Don't soften disagreement** or record a decision the human didn't make.
 6. **Only wikilinks**, never `[text](path)`.
 
