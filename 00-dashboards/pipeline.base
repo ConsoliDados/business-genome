@@ -1,7 +1,7 @@
 filters:
   and:
     - type == "lead"
-    - file.inFolder("crm")
+    - file.inFolder("10-crm")
 properties:
   note.status:
     displayName: Stage
