@@ -1,6 +1,6 @@
 filters:
   and:
-    - file.inFolder("editorial")
+    - file.inFolder("12-editorial")
 properties:
   note.channel:
     displayName: Channel

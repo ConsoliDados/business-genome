@@ -2,7 +2,7 @@ filters:
   and:
     - type == "project"
     - status != "archived"
-    - file.inFolder("projects")
+    - file.inFolder("11-projects")
 properties:
   note.currency:
     displayName: $

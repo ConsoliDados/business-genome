@@ -1,7 +1,7 @@
 filters:
   and:
     - type == "project"
-    - file.inFolder("projects")
+    - file.inFolder("11-projects")
 properties:
   note.project-type:
     displayName: Type
