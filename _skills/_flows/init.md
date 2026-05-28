@@ -29,6 +29,14 @@ tags: [skill, flow, setup]
 6. **Integrations** — for each `external:<tool>`, fill an [[integration]] note.
 
 ## Reconfigure
+- **Detach from the template's git history** — this clone becomes the user's own vault and will
+  hold real business/client data, so it must be **private** and must NOT share history with the
+  public template:
+  ```
+  rm -rf .git && git init -b main
+  gh repo create --private <org>/<name> --source=. --remote=origin
+  ```
+  (Confirm the org/name with the user. Never push a configured vault to the public template repo.)
 - Rewrite `_config/genome.md`: `status: configured`, company, languages, tiers, pipelines,
   module states, integrations.
 - Tailor `_config/pipelines/*` to the user's stages (or add new pipeline notes).
