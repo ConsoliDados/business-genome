@@ -3,7 +3,7 @@ title: "Active projects"
 type: dashboard
 status: active
 created: 2026-05-26
-updated: 2026-05-26
+updated: 2026-05-29
 tags: [dashboard]
 ---
 
@@ -14,7 +14,7 @@ tags: [dashboard]
 ## By status
 ```dataview
 TABLE WITHOUT ID file.link AS "Project", project-type AS "Type", doc-tier AS "Tier", engagement-tier AS "Eng", currency AS "$", status AS "Status"
-FROM "projects"
+FROM "11-projects"
 WHERE type = "project"
 SORT status ASC, project-type ASC
 ```
